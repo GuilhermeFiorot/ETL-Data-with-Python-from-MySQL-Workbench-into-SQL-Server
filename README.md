@@ -1,7 +1,7 @@
-# Extração e tratamento de dados com Python do MySQL Workbench para o SQL Server
+# Extraction and Handling of Data with Python from MySQL Workbench for SQL Server
 
-Essa integração foi criada com intuito de melhorar a eficiência e velocidade de uma extração de dados através de um SELECT no MySQL Workbench de uma empresa e inserção desse SELECT tratado dentro do SQL Server de outra empresa.
+This integration was created in order to improve the efficiency and speed of a data extraction through a SELECT in the MySQL Workbench of a company and insertion of this SELECT handled inside the SQL Server of another company.
 
-Utilizei o bulk insert dentro da procedure no SQL Server para poder melhorar o tempo de inserção dos dados dentro do banco.
+I used the bulk insert inside the procedure in SQL Server to be able to improve the insertion time of the data inside the database.
 
-Observação: o bulk insert requer que o CSV esteja dentro do servidor do banco de dados final.
+Note: Bulk insert requires the CSV to be inside the final database server.

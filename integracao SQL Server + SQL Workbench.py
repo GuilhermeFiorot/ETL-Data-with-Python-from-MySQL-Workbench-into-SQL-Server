@@ -1,51 +1,51 @@
-#importando dependencias
+#importing dependencies
 import pandas as pd
 import numpy as np
 import pymssql
 import mysql.connector
 
-#conectando nos servidores
+#connecting into servers
 connMS = pymssql.connect(server='1.1.1.1',
-                        user="teste",
-                        password="teste",
-                        database='teste',
+                        user="test",
+                        password="test",
+                        database='test',
                         host='1.1.1.1',
                         port='1433',)
 
 conn = mysql.connector.connect(host='1.1.1.0',
                                 port='3306',
-                                database='teste',
+                                database='test',
                                 user='teste',
-                                password= f'teste')
+                                password= f'test')
 
-#lendo do sql workbench e criando csv com pandas
-sql = "SELECT cd_entrada from ControleEntrada where data = CURDATE();"
+#reading from sql workbench and creating csv with pandas
+sql = "SELECT target from TableTarget where data = CURDATE();"
 data = pd.read_sql(sql, conn)
 
-#adicionando um id com numpy
+#adding id with numpy
 data.index = np.arange(1, len(data)+1)
 
-data.to_csv('caminho/ate/pasta/compartilhada/dentro/do/servidor/do/banco/ControleEntrada.csv', header = False)
+data.to_csv('path/ControleEntrada.csv', header = False)
 
-#drop na tabela, cria a tabela e executa a procedure
+#drop table and create table to make sure that is a new one
 cursorMS = connMS.cursor()
-cursorMS.execute("DROP TABLE ControleEntrada")
-cursorMS.execute("CREATE TABLE ControleEntrada([id] [bigint] IDENTITY(1,1) PRIMARY KEY NOT NULL,[codigo_entrada] [bigint] NOT NULL")
+cursorMS.execute("DROP TABLE TableTarget")
+cursorMS.execute("CREATE TABLE TableTarget([id] [bigint] IDENTITY(1,1) PRIMARY KEY NOT NULL,[target] [bigint] NOT NULL")
 
-# Crie uma procedure no banco dessa forma
-#   CREATE PROCEDURE [dbo].[sp_inserir_ControleEntrada]
+# Create a Procedure like this in the database
+#   CREATE PROCEDURE [dbo].[sp_insert_TableTarget]
 #   AS
 #   BEGIN
-#   	BULK INSERT ControleEntrada
-#   	FROM 'caminho/ate/pasta/compartilhada/dentro/do/servidor/do/banco/ControleEntrada.csv'
+#   	BULK INSERT TableTarget
+#   	FROM 'path/ControleEntrada.csv'
 #   	WITH (FORMAT='CSV')
 #   END
 #   GO
 
-cursorMS.execute("execute [dbo].[sp_inserir_ControleEntrada]")
+cursorMS.execute("execute [dbo].[sp_insert_TableTarget]")
 connMS.commit()
 
-#encerra a conexão
+#end connections
 print('done.')
 cursorMS.close()
 connMS.close()
